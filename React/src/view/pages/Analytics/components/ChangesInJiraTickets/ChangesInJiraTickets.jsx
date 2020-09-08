@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect,useRef } from 'react';
+import { useState, useEffect } from 'react';
 import "./ChangesInJiraTickets.css";
 
 //Components 
@@ -7,14 +7,13 @@ import Select from 'react-select'
 import Chart from "../charts/Chart"
 //import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 
-
 // Options To Send == > Server 
 const serverFilters = {
   values: [],
   status: [],
   qaRepresentative: [],
-  startDate: "",
-  endDate: "",
+  startDate: [],
+  endDate: [],
   label: ["weekly"]
 };
 
@@ -98,18 +97,12 @@ function ChangesInJiraTickets() {
 
 
 
-  
+
+
   // Filters onChange Functions 
 
   const HandleValuesChange = (change => {
-    serverFilters.qaRepresentative=[]
-    serverFilters.status=[]
-    if(change!=null){
     serverFilters.values = [change.value]
-    }
-    else {
-      serverFilters.values=[]
-    }
     render(serverFilters);
   })
 
@@ -140,12 +133,12 @@ function ChangesInJiraTickets() {
   })
 
   const HandleStartDateChange = (date => {
-    serverFilters.startDate = (date.target.value)
+    serverFilters.startDate = [date.target.value]
     render(serverFilters);
   })
 
   const HandleEndDateChange = (date => {
-    serverFilters.endDate = (date.target.value)
+    serverFilters.endDate = [date.target.value]
     render(serverFilters);
   })
 
@@ -155,9 +148,6 @@ function ChangesInJiraTickets() {
     render(serverFilters);
   })
 
-  
-  const statusInput=useRef("")
-  const qaInput=useRef("")
 
 
   return (
@@ -175,19 +165,16 @@ function ChangesInJiraTickets() {
 
       <form className="ChangeOfJiraTicket__Filters">
 
-        <Select 
-          onInputChange={()=> {statusInput.current.state.value="";qaInput.current.state.value=""}}
+        <Select
           name="oldNew"
           options={valueOptions}
           placeholder="old/new "
           className="ChangeOfJiraTicket__Filter"
           onChange={HandleValuesChange}
-          isClearable={true}
         />
 
-        <Select 
+        <Select
           name="status"
-          ref={statusInput}
           isMulti
           options={statusOptions}
           placeholder="Status "
@@ -198,7 +185,6 @@ function ChangesInJiraTickets() {
         <Select
           name="qaRepresentative"
           isMulti
-          ref={qaInput}
           options={qaRepresentativeOptions}
           placeholder="Qa Representative "
           className="DelaysInDelivery__Filter"
@@ -226,7 +212,7 @@ function ChangesInJiraTickets() {
           className="ChangeOfJiraTicket__Filter"
           onChange={HandleLabelChange}
         />
-          
+
       </form>
     </div>
   )

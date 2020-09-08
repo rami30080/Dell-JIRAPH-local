@@ -6,7 +6,7 @@ import Select from 'react-select';
 
 import { useState, useEffect } from 'react';
 
-const serverFilters = { priority: [], functionalTest: [], label: ["weekly"], qaRepresentative: [], startDate: (new Date("2020-08-1")), endDate: new Date("2020-09-1")};
+const serverFilters = { priority: [], functionalTest: [], label: ["weekly"], qaRepresentative: [], startDate: "", endDate: "" };
 
 
 
@@ -89,8 +89,6 @@ function DeletedJiraTickets() {
 
   ///change priority:
   const HandlePriorityChange = (change => {
-    serverFilters.functionalTest=[]
-    serverFilters.qaRepresentative=[]
     serverFilters.priority = []
     
     if(change!=null)(
@@ -130,16 +128,16 @@ function DeletedJiraTickets() {
   })
 
   ///change StartDate:
-  const HandleStartDateChange = (change => {
-   
-    serverFilters.startDate = new Date(change.target.value);
+  const HandleStartDateChange = (date => {
+    console.log(date)
+    serverFilters.date = (date.target.value);
     render(serverFilters);
   })
 
   ///change EndDate:
-  const HandleEndDateChange = (change => {
-    
-    serverFilters.endDate =  new Date(change.target.value);
+  const HandleEndDateChange = (date => {
+    console.log(date.value)
+    serverFilters.date = (date.target.value);
     render(serverFilters);
   })
 
@@ -149,8 +147,6 @@ function DeletedJiraTickets() {
     serverFilters.label = [label.value];
     render(serverFilters);
   })
-
- 
 
   return (
 
